@@ -1,6 +1,6 @@
 ssh example:
 
-ssh -i C:\Users\dalla\Repo\Hostgator\.ssh\Hostgator-Key-1.pem ec2-user@54.201.136.153
+ssh -i C:\Users\dalla\Repo\Hostgator\.ssh\Hostgator-Key-1.pem ec2-user@44.225.148.34
 
 (use your own fucking path)
 
@@ -129,3 +129,223 @@ server {
 restart nginx
 
 sudo systemctl restart nginx
+
+---
+bunch of shit i should have written down, basically I asked GPT how to set up a wordpress site
+and it worked. I got dallascaley.info working with a basic default wordpress.  not rocket science
+here
+---
+
+Next step, need to create an FTP user so wordpress can update it's own plugins.
+
+connect to your instance:
+
+ssh -i your-key.pem ec2-user@your-ec2-public-ip
+
+install this shit:
+
+sudo yum install vsftpd -y
+
+Start and enable this crap even though you don't know what the fuck it is.
+
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+
+Create new FTP user
+
+sudo adduser ftpuser
+sudo passwd ftpuser
+
+FUCK!  I should have read the gpt instructions before actually doing anything. here they are:
+
+    5. Create FTP Directory & Set Permissions
+
+        sudo mkdir -p /home/ftpuser/ftp/files
+        sudo chown nobody:nogroup /home/ftpuser/ftp
+        sudo chmod a-w /home/ftpuser/ftp
+        sudo chown ftpuser:ftpuser /home/ftpuser/ftp/files
+
+    6. Configure vsftpd
+
+        Open the config file:
+
+        sudo nano /etc/vsftpd/vsftpd.conf
+
+
+        Make sure these values are set (uncomment if needed):
+
+        anonymous_enable=NO
+        local_enable=YES
+        write_enable=YES
+        chroot_local_user=YES
+        allow_writeable_chroot=YES
+        user_sub_token=$USER
+        local_root=/home/$USER/ftp
+
+
+        Add this at the bottom if not present:
+
+        pasv_min_port=30000
+        pasv_max_port=31000
+
+
+        Save and exit (Ctrl+O, Enter, Ctrl+X).
+
+    7. Restart vsftpd
+
+        sudo systemctl restart vsftpd
+
+    8. Adjust Firewall / Security Groups
+
+        In the AWS EC2 console:
+
+        Go to Security Groups
+
+        Edit inbound rules to allow:
+
+        TCP Port 21 (FTP)
+
+        TCP Ports 30000–31000 (Passive FTP)
+
+        Optional: TCP 20 (FTP data transfer)
+
+    9. Test FTP Connection
+
+        Use an FTP client like FileZilla or WinSCP with:
+
+        Host: your EC2 public IP
+
+        Port: 21
+
+        Protocol: FTP
+
+        Username: ftpuser
+
+        Password: the one you set
+
+        Passive mode: enabled
+
+    🔐 Optional (Highly Recommended): Use SFTP Instead
+
+    FTP transmits credentials in plain text. Consider using SFTP (via SSH) instead. It's enabled by default for all system users.
+
+    You can use the same user (ftpuser) and connect with SFTP (port 22) without setting up vsftpd at all.
+
+    Would you prefer setting up SFTP instead for better security?
+
+Translation, here's the fucking stupid way to do it, would you like to know the better way?
+
+
+yes, how can i set up SFTP?  (and is that the same as FTPS as it is referred to in the Wordpress setup)
+
+ChatGPT said:
+
+Great choice — SFTP is much more secure than plain FTP.
+
+✅ SFTP vs FTPS (WordPress context)
+Term	Meaning	Secure?	Port	Used by WordPress?
+SFTP	SSH File Transfer Protocol	✅ Yes (via SSH)	22	✅ Yes
+FTPS	FTP over SSL/TLS (FTP Secure)	✅ Yes	990 (implicit) or 21 (explicit)	✅ Yes
+FTP	Plain old FTP	❌ No	21	✅ Yes (but insecure)
+
+👉 SFTP and FTPS are different protocols.
+In WordPress, when it asks for FTPS, it's often confusing — it may actually support SFTP under the hood depending on your server setup.
+
+🔐 Set Up SFTP on AWS EC2 (Recommended)
+
+SFTP works out-of-the-box via SSH on Linux EC2 instances.
+
+🎯 Goal
+
+Set up a dedicated SFTP-only user (no shell access).
+
+Limit user access to a specific directory (like /var/www/html for WordPress uploads).
+
+🛠️ Step-by-Step SFTP Setup
+1. Create a User
+sudo adduser sftpuser
+sudo passwd sftpuser
+
+2. Create and Assign a Directory
+
+Let's say you want the user to access /var/www/html/wp-content/uploads:
+
+sudo mkdir -p /var/www/html/wp-content/uploads
+sudo chown root:root /var/www/html/wp-content
+sudo chown sftpuser:sftpuser /var/www/html/wp-content/uploads
+
+
+🔐 The uploads folder must be owned by the user. The parent directory (wp-content) must be owned by root for chroot to work properly.
+
+3. Restrict SFTP User to SFTP Only
+
+Edit the SSH config:
+
+sudo nano /etc/ssh/sshd_config
+
+
+Add at the bottom (or modify if exists):
+
+Match User sftpuser
+    ChrootDirectory /var/www/html/wp-content
+    ForceCommand internal-sftp
+    AllowTcpForwarding no
+    X11Forwarding no
+
+
+🔁 Explanation:
+
+Restricts user to SFTP only
+
+Chroots to /var/www/html/wp-content, so they only see /uploads
+
+4. Restart SSH
+sudo systemctl restart sshd
+
+5. Test SFTP
+
+Use an SFTP client (like FileZilla or Cyberduck) with:
+
+Protocol: SFTP
+
+Host: your EC2 public IP
+
+Port: 22
+
+Username: sftpuser
+
+Password: the one you set
+
+You should land directly in the uploads/ directory.
+
+✅ Bonus: Set SFTP in WordPress
+
+When WordPress prompts for connection info:
+
+Connection Type: select SFTP
+
+Hostname: your EC2 public IP
+
+Username: sftpuser
+
+Password: password you set
+
+Port: 22
+
+If you want to skip this screen entirely, you can define these in wp-config.php:
+
+define('FS_METHOD', 'ssh2');
+define('FTP_USER', 'sftpuser');
+define('FTP_PASS', 'yourpassword');
+define('FTP_HOST', 'your-ec2-ip:22');
+define('FTP_BASE', '/var/www/html/');
+
+🔐 Important Security Note
+
+The SFTP user cannot upload outside the chroot directory (/var/www/html/wp-content).
+
+Do not give this user sudo or shell access unless needed.
+
+Use key-based auth if possible instead of a password (for stronger security).
+
+Would you like help switching to key-based authentication for your SFTP user?

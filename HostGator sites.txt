@@ -1,0 +1,40 @@
+HostGator sites:
+
+https://angelinacardone.com  (was just a wordpress site)
+
+The Prompt Prompter  https://website-5bcb7e40.mdj.eko.temporary.site/
+
+https://cherryblossomdevelopment.com  (wordpress)
+
+https://thehealingwoods.com (was a wordpress site, but then redirected to a wix external site)
+                             also had an email that she actually used
+
+https://union-party.org (a wordpress site i recently made with almost nothing on it)
+
+https://criminalinchief.com  (something Aric made no idea)
+
+https://caleyunit.com  (again, Aric...)
+
+https://nerdprovisions.com   (Aric)
+
+https://pearshapeboy.com  (this was my original site i made like 16 years ago, wordpress i think)
+
+https://stationsofthesun.com  (a redirect to a wix page or some shit?)
+
+https://humansstink.com (Aric)
+
+https://prosaurus.com (was my own shit at one point but now i am using AWS)
+
+https://peoplecatcher.net (Aric)
+
+http://www.heathercaley.info (A wordpress site my ex hasn't used in quite a while)
+
+http://extremepanic.com  (this was a wordpress site, that site is not working however
+                          the path http://extremepanic.com/music.php is currently the only site actually
+                          working still.  This is just a one page php script, and i actually still use it)
+
+http://dallascaley.info (A wordpress site that was working but not anymore)
+
+http://www.carolearts.com (A wordpress site with some plugins that my mom was using for art stuff
+                           it is broken, but i have downloaded all the files)
+

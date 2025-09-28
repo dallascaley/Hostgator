@@ -1,0 +1,9 @@
+1) Open PowerShell with Admin access
+
+2) CD to the location of you nginx stuff
+
+   cd C:\Users\dalla\Repo\Hostgator\nginx\
+
+3) Start nginx
+  
+   start nginx

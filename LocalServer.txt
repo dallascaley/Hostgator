@@ -28,39 +28,43 @@ ChatGPT remaining
 
       (done 9/29/2025)
 
-🔐 MariaDB User Privileges
+   🔐 MariaDB User Privileges
 
-Make sure you created a remote-accessible DB user:
+      Make sure you created a remote-accessible DB user:
 
-CREATE USER 'wordpressuser'@'%' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wordpressuser'@'%';
-FLUSH PRIVILEGES;
+      CREATE USER 'wordpressuser'@'%' IDENTIFIED BY 'your_password';
+      GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wordpressuser'@'%';
+      FLUSH PRIVILEGES;
 
-
-You can also allow access from your specific IP instead of % for better security.
+      You can also allow access from your specific IP instead of % for better security.
 
 🧪 5. Test Remote Connection from Your Windows Machine
 
-In Windows Command Prompt or PowerShell, run:
+   In Windows Command Prompt or PowerShell, run:
 
-telnet your-ec2-ip 3306
+   telnet your-ec2-ip 3306
 
+   If it connects (screen goes blank or you get a response), you're good.
 
-If it connects (screen goes blank or you get a response), you're good.
+   If telnet is not installed, try:
 
-If telnet is not installed, try:
-
-Test-NetConnection your-ec2-ip -Port 3306
+   Test-NetConnection your-ec2-ip -Port 3306
 
 ✅ 6. Update WordPress wp-config.php
 
-Once confirmed, update your local site's wp-config.php:
+   Once confirmed, update your local site's wp-config.php:
 
-define('DB_NAME', 'wordpress_db');
-define('DB_USER', 'wordpressuser');
-define('DB_PASSWORD', 'your_password');
-define('DB_HOST', 'your-ec2-ip-address'); // Or public DNS
+   define('DB_NAME', 'wordpress_db');
+   define('DB_USER', 'wordpressuser');
+   define('DB_PASSWORD', 'your_password');
+   define('DB_HOST', 'your-ec2-ip-address'); // Or public DNS
 
+   FYI, you will need some shit like this for local whatever the fuck site you want:
+
+   define('WP_HOME', 'http://local.dallascaley.info');
+   define('WP_SITEURL', 'http://local.dallascaley.info');
+
+   This overrides the shit hardcoded in the db
 
 Then reload your local site (e.g., http://mysite.local).
 

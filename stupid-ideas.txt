@@ -1,0 +1,16 @@
+Contract vs Salaried job comparison
+
+CS = Current Salary
+
+PCR = Proposed Contract Rate
+
+I = Is it worth it?  (positive values indicate yes, negative values indicate no)
+
+SETA = Self Employment Tax Adjustment (aka the percentage extra you will have to pay because you are self employed)
+       example: if 110/hour contract is like making 100/hour salaried then SETA = 100/110 = .9090_
+
+CUR = Contract Unemployment Rate.  This number is d
+
+	       PCR * SETA
+I = ---------------------
+            CS

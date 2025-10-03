@@ -1,16 +1,36 @@
-Contract vs Salaried job comparison
+Contract vs Permanent job comparison
 
-CS = Current Salary
-
-PCR = Proposed Contract Rate
+PR = Permanent Rate (or equivalent with Salary)
+CR = Contract Rate
 
 I = Is it worth it?  (positive values indicate yes, negative values indicate no)
 
 SETA = Self Employment Tax Adjustment (aka the percentage extra you will have to pay because you are self employed)
-       example: if 110/hour contract is like making 100/hour salaried then SETA = 100/110 = .9090_
 
-CUR = Contract Unemployment Rate.  This number is d
+       example: if 110/hour contract is like making 100/hour permanent then SETA = 100/110 = .9090_
 
-	       PCR * SETA
-I = ---------------------
-            CS
+CUR = Contract Unemployment Rate.  This number is determined by guessing how long your average contract job lasts
+      and then dividing that by the same length plus how long you expect to be out of work between contract jobs
+
+      example: Typical contract lasts 1 year (aka 12 months),  typically out of work 3 months = 12 / 12 + 3 = .8
+
+PUR = Permanent Unemployment Rate.  This number is how long your average permanent position lasts devided by that length
+      plus how long you expect to be out of work between permanent positions
+
+      example: Typical permanent job length 4 years, out of work 1 month = 48 / 48 + 1 = .9796
+
+     CR * SETA * CUR
+I = -----------------
+        PR * PUR
+
+
+Other ideas that could be thrown into this calculation:
+
+  1) Risk tolerance.  How tolerant are you of risk?  Generally people become less tolerant of risk as they get older.
+
+     If risk tolerance changes over time, what is the average curve of this change and can we guess what it might be
+     for anyone given their age/years in the industry
+
+  2) What other benefits are there of contract and permanent rolls
+
+     Specifically, what are those benefits worth?  What is healtcare actually worth, flexible hours etc... 

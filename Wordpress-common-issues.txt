@@ -1,0 +1,91 @@
+ChatGPT question:
+
+I have a wordpress site that is hosted locally. it's just a basic out-of-the-box site with no configuration. I also have a database dump of a real wordpress site which has a bunch of data in it. I downloaded that dump and set up another database in the same host as my local one. I then changed the wp-config of my new basic wordpress site to point at the old database. Now nothing at all works
+
+Answer:
+
+Got it — you're trying to take a **local basic WordPress site** and connect it to a **real site's database dump** by switching the database in `wp-config.php`. Since "nothing at all works," let’s walk through what might be going wrong and how to fix it.
+
+---
+
+### 🔧 Likely Issues and Fixes
+
+#### 1. ✅ **Database connection works — but the site breaks**
+
+If your `wp-config.php` change points to the real site's database, and *nothing* loads or you get a white screen, the site is probably loading **data (URLs, theme, plugins)** from the real site’s setup — which doesn’t match your local environment.
+
+##### 🔍 Check #1: **Site URL mismatch**
+
+WordPress stores the site's home URL and site URL **in the database**, not just in `wp-config.php`. So your local site is now trying to load resources from the **real (remote) URL**, causing things to break or redirect endlessly.
+
+**Fix: Temporarily override site URLs in `wp-config.php`**
+
+Add these lines to your `wp-config.php` **above** the `/* That's all, stop editing! Happy blogging. */` line:
+
+```php
+define('WP_HOME', 'http://localhost/your-folder-name');
+define('WP_SITEURL', 'http://localhost/your-folder-name');
+```
+
+> Replace `your-folder-name` with your actual local site path, or just `http://localhost` if it's at the root.
+
+---
+
+#### 2. 🧱 **Permalinks / .htaccess issues**
+
+If pages aren’t loading or give 404 errors:
+
+* Go to **Settings → Permalinks** in the WordPress dashboard and just click **Save** (this refreshes `.htaccess` rules).
+* If you can’t access the admin, you may need to reset permalinks manually in the database (let me know if needed).
+
+---
+
+#### 3. 🎨 **Missing theme or plugins**
+
+If the real site's database references themes or plugins that **aren’t installed locally**, WordPress may fail to load properly or throw errors.
+
+**Fix:**
+Install the **same theme and plugins** used on the real site into your local WordPress `wp-content` directory.
+
+---
+
+#### 4. 🧼 **Database serialization problems (rare but possible)**
+
+WordPress stores some data (like options) in **serialized PHP arrays**, which break if you do find/replace in the SQL dump. If you've edited the SQL manually, it could corrupt the serialized strings.
+
+**Fix:** Use a tool like [WP-CLI's `search-replace`](https://developer.wordpress.org/cli/commands/search-replace/) or [Interconnect/IT’s Search Replace DB tool](https://interconnectit.com/products/search-and-replace-for-wordpress-databases/) to safely update URLs in the DB.
+
+---
+
+### 🔍 Quick Troubleshooting Checklist
+
+| Check                     | Command or Location                               |
+| ------------------------- | ------------------------------------------------- |
+| DB connection works?      | Does site give DB connection error?               |
+| Site loads but redirects? | Add `WP_HOME` and `WP_SITEURL` to `wp-config.php` |
+| Theme missing or broken?  | Reinstall theme from live site                    |
+| Plugins missing?          | Copy `wp-content/plugins` from real site          |
+| Permalinks broken?        | Reset permalinks from admin or database           |
+
+---
+
+### Bonus: How to view current site URL in the DB
+
+If you can connect to the DB (e.g., via **phpMyAdmin** or **MySQL CLI**), run:
+
+```sql
+SELECT option_name, option_value FROM wp_options 
+WHERE option_name IN ('siteurl', 'home');
+```
+
+This will show you the current URLs WordPress is trying to use.
+
+---
+
+Let me know:
+
+* What do you see on the screen now? Blank page? Error?
+* Can you access `wp-admin`?
+* Did you import the real database into a **fresh DB**, or overwrite your local one?
+
+Happy to help you walk through the fix!

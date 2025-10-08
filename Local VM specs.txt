@@ -1,0 +1,79 @@
+General
+  Basic
+    Name Ubuntu-Local
+    Type Linux
+    Subtype Ubuntu
+    Version Ubuntu (64-bit)
+  Advanced
+    Snapshot Folder C:\Users\dalla\VirtualBox VMs\Ubuntu-local\Snapshots
+    Shared Clipboard Bidirectional
+    Drag'n'Drop Bidirectional
+  Description
+    nothing
+  Disk Encryption
+    not checked
+
+System
+  Base Memory: 4096 MB
+  Boot Order: Hard Disk, Optical, Floppy
+  Chipset PIIX3
+  TPM None
+  Pointing Device USB Tablet
+  Extended Features Enable I/O APIC
+                    Enable Hardware Clock in UTC Time
+  Processors: 4
+  Execution Cap: 100%
+  Paravirtualization Interface Default
+  Hardware Virtualization Enable Nested Paging
+
+Display
+  Screen
+    Video Memory 16 MB
+    Monitor Count 1
+    Scale Factor 100%
+    Graphics Controller VMSVGA
+  Recording
+    not enabled
+
+Storage
+  Devices
+    Controller IDE - PIIX4 Use Host I/O Cache checked
+      VBoxGuestAdditions.iso - IDE Secondary Device 0
+                               Live CD/DVD not checked
+                               Image, 57.44 MB
+                      Location C:\Program Files\Oracle\VirtualBox\VBoxGuestAdd...
+    Controller SATA - Type ACHI port count 1
+      Ubuntu-Local.vdi - Type Normal (VDI)  (Attributes, Hard Disk?)
+               Virtual Size : 25 GB
+               Actual Size  : 20.76 GB
+            Storage Details : Dynamically allocated storage
+               Location       C:\Users\dalla\VirtualBox VMs\Ubuntu-Local...
+
+Audio
+  Enabled
+  Host Audio Driver Default
+  Extended Features Enable Audio Output
+
+Network
+  Adapter 1
+    Enable Network Adapter (checked)
+    Attached to Bridged Adapter
+    Name Intel(R) Ethernet Controller (3) I225-LMvP
+    Adapter Type Intel PRO/1000 MT Desktop (82540EM)
+    Promiscuous Mode Deny
+    Mac Address: whatever
+    Cable Connected checked
+  No other adapters
+
+Serial Ports
+  USB
+    Enable USB Controller
+      USB 2.0
+
+Shared Folders (probably don't want any)
+
+User Interface
+  File, Machine, View, Input, Devices, Debug, Help
+    Visual State Normal (window)
+    Mini Toolbar both checked
+  bottom bar, checked.

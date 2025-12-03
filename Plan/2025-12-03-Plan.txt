@@ -1,0 +1,45 @@
+Ok, a little overview...
+
+We have a VM called WP-Airgap-Toolbox.  It has Filezilla installed in it and not much else
+
+We also have a connection via DBeaver called EC2-Hostgator.  This appears to have the original database for the dallascaley.info wordpress site on it. The host is 44.225.148.34 so I am assuming this is actually a copy of the database which i uploaded to a new EC2 database.
+
+What might we need to do:
+
+1) Download all the files from Hostgator, specifically the ones from the dallascaley.info site into my local Airgap VM
+
+2) Determine exactly which version of Wordpress the site had been running (not sure if this is by looking at the database or the files)
+
+3) On the VM, create a brand new Wordpress install with that exact version of wordpress.  point it at a brand new database somewhere
+   3a) create a database for this wordpress site, probably in the same location as the other one.
+
+4) Create the admin/AI interface website, on the VM
+
+   What does it do?
+
+   a) via the interface, you can look at files from the original dallascaley.info site and also the new clean site.  for each file it is either
+
+      1) only in the new site
+      2) only in the old site
+      3) in both sites and is exactly the same
+      4) in both sites and is different
+
+      the interface should show one or two versions of the file side by side
+      it should have scroll ability/word wrap etc...
+
+      at the bottom should be some classification options:
+
+      A) Keep old version
+      B) Keep new version
+      C) reason for decision (this might be a dropdown selector)
+      D) send to archive of files needing further review
+
+    b) also via the interface, do essentially the same thing as above, but for the database tables and rows.
+
+    c) Whenever a classification decision is made, and actually during this entire process.  The website needs to have its own database.  This database will track which files have been checked, which tables and which rows so that you can start classification and then come back to it at a later date.
+
+    d) The classifications made, will also be stored.  Specifically, they will be stored in relation to the data used to classify them.  There might need to be a system where we can identify data which is worthy of making the decision (such as the html contents of a page), vs data that might be irrelevent (could be anything).  The idea here is that we will take this data and run it into varius machine learning classficiation algorithms (perhaps a trained ensemble model) and use it for the final thing which would be...
+
+    e) at the end of every page which shows either web pages or data rows, and after the classification options will be the systems own prediction of what the classification should be, as well as historical metrics for classification.  The purpose of this is so that the user can see how well the algorithm is classifying in real time and make the decision to set it on it's own for future automated classification.
+
+    

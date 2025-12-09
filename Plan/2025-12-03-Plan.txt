@@ -7,11 +7,28 @@ We also have a connection via DBeaver called EC2-Hostgator.  This appears to hav
 What might we need to do:
 
 1) Download all the files from Hostgator, specifically the ones from the dallascaley.info site into my local Airgap VM
+ 
+   Done via the Hostgator web interface, I just logged in, Zipped the entire folder and downloaded it
 
 2) Determine exactly which version of Wordpress the site had been running (not sure if this is by looking at the database or the files)
 
+   According to the wp-includes/version.php file it is version 6.8.1
+   db-version 58975
+   tinymce_version 49110-20201110
+   required_php_version 7.2.24
+   required_php_extensions json and hash
+   required_mysql_version 5.5.5
+
 3) On the VM, create a brand new Wordpress install with that exact version of wordpress.  point it at a brand new database somewhere
    3a) create a database for this wordpress site, probably in the same location as the other one.
+
+   Downloaded files (tar.gz)
+   created dallascaley_info_wp_base db on ec2 instance, granted permission to main two users
+   installed nginx on the vm with php and other crap
+   got basic site setup in nginx. db connection not working yet. stopping here.
+   
+   12/04/2025
+   got it working, there was an issue with the Bridge Adapter on the VM not being in promiscuous mode
 
 4) Create the admin/AI interface website, on the VM
 
@@ -42,4 +59,3 @@ What might we need to do:
 
     e) at the end of every page which shows either web pages or data rows, and after the classification options will be the systems own prediction of what the classification should be, as well as historical metrics for classification.  The purpose of this is so that the user can see how well the algorithm is classifying in real time and make the decision to set it on it's own for future automated classification.
 
-    

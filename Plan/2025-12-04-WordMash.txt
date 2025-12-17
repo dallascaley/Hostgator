@@ -3,21 +3,21 @@ ChatGPT said:
 
 Great — your chosen stack is clean, efficient, and perfectly suited for what you're building. Here’s a refined architecture and concrete suggestions tailored exactly to:
 
-FastAPI
+  - FastAPI
 
-Jinja2 templates
+  - Jinja2 templates
 
-MariaDB (no ORM)
+  - MariaDB (no ORM)
 
-scikit-learn
+  - scikit-learn
 
-Plain JS front-end
+  - Plain JS front-end
 
-Diffing libraries
+  - Diffing libraries
 
-Background tasks (inside FastAPI)
+  - Background tasks (inside FastAPI)
 
-Below is a clear plan plus starter code.
+  Below is a clear plan plus starter code.
 
 ✅ Architecture Overview (tailored to your preferences)
 

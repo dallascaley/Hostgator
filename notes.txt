@@ -344,3 +344,23 @@ Great choice — SFTP is much more secure than plain FTP.
  * Use key-based auth if possible instead of a password (for stronger security).
 
 Would you like help switching to key-based authentication for your SFTP user?
+
+
+in our last session I had this request:
+
+everything is working great so far.  Currently the inventory page only 
+scans dirty files, dirty lines of code, dirty tables and dirty database 
+rows.  I would like to also add all the clean versions of all of those 
+things in a new row on the inventory page (put the clean ones on top and 
+the dirty ones underneath).  In order to do this, we will need to add a 
+flag to each database table to indicate dirty or clean (is dirty true 
+false).  and then make all the other necessary changes.  For the api 
+endpoints, I am hoping we can extend the current code rather than making 
+new functions becasue most of the functionality will be the same
+
+However I ran out of credits, can you check to see how far we got here and complete whatever is remaining?
+
+
+12/16/2025
+
+robot died while trying to get socket connections aligned into one endpoint so it's not retarded.

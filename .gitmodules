@@ -1,3 +1,6 @@
 [submodule "cherryblossomdevelopment.com"]
 	path = cherryblossomdevelopment.com
 	url = https://github.com/dallascaley/cherryblossom.git
+[submodule "dallascaley.info"]
+	path = dallascaley.info
+	url = https://github.com/dallascaley/dallascaley.info.git
